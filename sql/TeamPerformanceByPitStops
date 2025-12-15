@@ -1,0 +1,44 @@
+/*
+    View Name: analytics.TeamPerformance_ByPitStops
+
+    Objective:
+        Analyze how the number of pit stops performed by each driver in a race
+        correlates with their final finishing position, grouped by constructor.
+        Used to compare pit stop strategy effectiveness across teams.
+
+    Used In Power BI:
+        "Average Finish Position by Pit Stop Count and Constructor"
+        (line chart with constructor legend / slicer)
+
+    Logic Summary:
+        - Subquery counts pit stops per driver per race.
+        - LEFT JOIN ensures drivers with zero pit stops are included (assigned 0).
+        - Join with results and constructors to add finishing position and team.
+        - Filter only valid finish positions (1–20).
+
+    Source Tables:
+        dbo.results, dbo.constructors, dbo.pitstops
+*/
+
+CREATE OR ALTER VIEW analytics.TeamPerformance_ByPitStops AS
+SELECT
+    cons.name AS constructorName,
+    r.positionOrder AS finishPosition,
+    ISNULL(pc.pitStopCount, 0) AS pitStopCount
+FROM dbo.results AS r
+INNER JOIN dbo.constructors AS cons
+    ON cons.constructorId = r.constructorId
+LEFT JOIN (
+    SELECT
+        raceId,
+        driverId,
+        COUNT(*) AS pitStopCount
+    FROM dbo.pitstops
+    GROUP BY
+        raceId,
+        driverId
+) AS pc
+    ON pc.raceId = r.raceId
+    AND pc.driverId = r.driverId
+WHERE r.positionOrder IS NOT NULL
+  AND r.positionOrder > 0;
