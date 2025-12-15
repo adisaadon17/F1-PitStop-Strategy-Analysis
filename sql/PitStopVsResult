@@ -1,0 +1,54 @@
+/*
+    View Name: analytics.PitStop_vs_Result
+
+    Objective:
+        Create an analytical dataset that links each driver's number of pit stops
+        with their finishing position, race information, and constructor.
+        This allows analysis of how pit stop strategy affects race results.
+
+    Used In Power BI:
+        "Average Finishing Position by Pit Stop Count"
+
+    Logic Summary:
+        - CTE 'pit_counts' counts pit stops per driver per race.
+        - LEFT JOIN ensures drivers with zero pit stops are included (assigned 0).
+        - Join with results, races, drivers, and constructors for full context.
+        - Filter only valid finish positions (1–20).
+
+    Source Tables:
+        dbo.pitstops, dbo.results, dbo.races, dbo.drivers, dbo.constructors
+*/
+
+CREATE OR ALTER VIEW analytics.PitStop_vs_Result AS
+WITH pit_counts AS (
+    SELECT
+        p.raceId,
+        p.driverId,
+        COUNT(*) AS pitStopCount
+    FROM dbo.pitstops AS p
+    GROUP BY
+        p.raceId,
+        p.driverId
+)
+SELECT
+    ra.[year] AS raceYear,
+    ra.name AS raceName,
+    r.raceId,
+    r.driverId,
+    CONCAT(d.forename, ' ', d.surname) AS driverName,
+    r.constructorId,
+    cons.name AS constructorName,
+    ISNULL(pc.pitStopCount, 0) AS pitStopCount,
+    r.positionOrder AS finishPosition
+FROM dbo.results AS r
+INNER JOIN dbo.races AS ra
+    ON ra.raceId = r.raceId
+INNER JOIN dbo.drivers AS d
+    ON d.driverId = r.driverId
+INNER JOIN dbo.constructors AS cons
+    ON cons.constructorId = r.constructorId
+LEFT JOIN pit_counts AS pc
+    ON pc.raceId = r.raceId
+    AND pc.driverId = r.driverId
+WHERE r.positionOrder IS NOT NULL
+  AND r.positionOrder > 0;
