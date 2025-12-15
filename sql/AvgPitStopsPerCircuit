@@ -1,0 +1,30 @@
+/*
+    View Name: analytics.AvgPitStops_perCircuit
+
+    Objective:
+        Analyze how different circuits influence pit stop strategy by calculating
+        the average number of pit stops per driver at each circuit.
+        This helps identify tracks with higher tyre degradation, weather impact,
+        or strategic variability.
+
+    Used In Power BI:
+        "Average Pit Stops per Driver by Circuit"
+
+    Logic Summary:
+        - COUNT(p.stop): counts all pit stops at the circuit
+        - COUNT(DISTINCT p.driverId): counts unique drivers who participated
+        - avgPitStopsPerDriver = total pit stops / number of drivers
+        - GROUP BY ra.name groups results per circuit
+
+    Source Tables:
+        dbo.pitstops, dbo.races
+*/
+
+CREATE OR ALTER VIEW analytics.AvgPitStops_perCircuit AS
+SELECT
+    ra.name AS circuitName,
+    COUNT(p.stop) * 1.0 / COUNT(DISTINCT p.driverId) AS avgPitStopsPerDriver
+FROM dbo.pitstops AS p
+INNER JOIN dbo.races AS ra
+    ON ra.raceId = p.raceId
+GROUP BY ra.name;
