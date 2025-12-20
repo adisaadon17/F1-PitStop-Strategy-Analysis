@@ -9,7 +9,6 @@ The dashboards are presented below in the same order as they appear in the Power
 [Download the full written analysis (Word)](/docs/analysis_notes/pit_strategy_analysis_he_en.docx)
 
 
-
 ---
 
 ## 1️⃣ Pit Stop Analysis
