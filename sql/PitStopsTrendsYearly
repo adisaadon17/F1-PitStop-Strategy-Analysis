@@ -13,7 +13,8 @@
 
     Used In Power BI:
         - "Average Pit Stops Per Year"
-        - (Additional yearly trend visuals, if applicable)
+        - "Average Pit Lane Time Per Year"
+
 
     Logic Summary:
         1) stops CTE:
