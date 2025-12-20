@@ -1,0 +1,34 @@
+/*
+    View Name: analytics.CircuitStrategy_Effectiveness
+
+    Objective:
+        Analyze pit stop strategy effectiveness at the circuit level.
+        For each circuit and season, evaluate how different pit stop counts
+        affect average finishing position.
+
+    Used In Power BI:
+        "Average Finish Position by Pit Stop Count (per Circuit)"
+        (line chart with circuit slicer)
+
+    Logic Summary:
+        - Group drivers by circuit, year, and pit stop count.
+        - Count how many drivers used each pit stop strategy.
+        - Calculate average finishing position per strategy.
+        - Enables identification of the optimal pit stop strategy per circuit.
+
+    Source View:
+        analytics.PitStop_vs_Result
+*/
+
+CREATE OR ALTER VIEW analytics.CircuitStrategy_Effectiveness AS
+SELECT
+    raceName AS circuitName,
+    raceYear,
+    pitStopCount,
+    COUNT(*) AS driversCount,
+    AVG(CAST(finishPosition AS FLOAT)) AS avgFinishPos
+FROM analytics.PitStop_vs_Result
+GROUP BY
+    raceName,
+    raceYear,
+    pitStopCount;
