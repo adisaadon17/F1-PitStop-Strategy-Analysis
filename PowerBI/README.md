@@ -5,6 +5,10 @@ Each dashboard explores a different aspect of pit stop behavior, efficiency, and
 
 The dashboards are presented below in the same order as they appear in the Power BI report.
 
+📄 **Detailed Analysis (Hebrew & English):**  
+[Download the full written analysis (Word)](../docs/analysis_notes/pit_strategy_analysis_he_en.docx)
+
+
 ---
 
 ## 1️⃣ Pit Stop Analysis
