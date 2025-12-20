@@ -1,0 +1,65 @@
+/*
+    View Name: analytics.PitEfficiency_vs_Results
+
+    Objective:
+        Analyze the relationship between pit lane efficiency and race performance
+        at the constructor level by computing yearly averages of:
+        - Average pit lane time (seconds)
+        - Average finishing position
+
+        Note:
+        This view returns one row per constructor per year.
+        In Power BI, values are averaged across years to display
+        a single overall data point per constructor.
+
+    Used In Power BI:
+        "Pit Lane Efficiency vs Race Results (Overall by Team)"
+        (scatter plot with trend line)
+
+    Logic Summary:
+        1) pit CTE:
+           Calculates average pit lane time per constructor per year,
+           based on all pit stops.
+        2) res CTE:
+           Calculates average finishing position per constructor per year.
+        3) Final SELECT:
+           Joins both yearly aggregates for visualization.
+
+    Source Views:
+        analytics.PitStop_summary_clean,
+        analytics.PitStop_vs_Result
+*/
+
+CREATE OR ALTER VIEW analytics.PitEfficiency_vs_Results AS
+WITH pit AS (
+    SELECT
+        ps.constructorName,
+        rvr.raceYear,
+        AVG(CAST(ps.pitDurationSec AS FLOAT)) AS avgPitLaneSec
+    FROM analytics.PitStop_summary_clean AS ps
+    INNER JOIN analytics.PitStop_vs_Result AS rvr
+        ON rvr.raceId = ps.raceId
+        AND rvr.constructorName = ps.constructorName
+    GROUP BY
+        ps.constructorName,
+        rvr.raceYear
+),
+res AS (
+    SELECT
+        constructorName,
+        raceYear,
+        AVG(CAST(finishPosition AS FLOAT)) AS avgFinishPos
+    FROM analytics.PitStop_vs_Result
+    GROUP BY
+        constructorName,
+        raceYear
+)
+SELECT
+    p.constructorName,
+    p.raceYear,
+    ROUND(p.avgPitLaneSec, 2) AS avgPitLaneSec,
+    ROUND(r.avgFinishPos, 2) AS avgFinishPos
+FROM pit AS p
+INNER JOIN res AS r
+    ON r.constructorName = p.constructorName
+    AND r.raceYear = p.raceYear;
