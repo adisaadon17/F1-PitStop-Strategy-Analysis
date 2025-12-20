@@ -1,64 +1,84 @@
 # Power BI Dashboards – Pit Stop Strategy Analysis
 
-This section presents a series of Power BI dashboards analyzing Formula 1 pit stop strategy, pit lane efficiency, and their relationship to race outcomes.  
-The dashboards build progressively, starting from descriptive operational metrics and moving toward strategic insights and high-level conclusions.
+This folder contains the Power BI dashboards created as part of the **F1 Pit Stop Strategy Analysis** project.  
+Each dashboard explores a different aspect of pit stop behavior, efficiency, and race outcomes, progressing from raw pit performance to strategic insights and final conclusions.
+
+The dashboards are presented below in the same order as they appear in the Power BI report.
 
 ---
 
-## Dashboards Overview
+## 1️⃣ Pit Stop Analysis
 
-### 1. Pit Stop Analysis - Duration & Strategy Insights
-![Dashboard](dashboards/pit_lane_efficiency_vs_results.png)
+![Pit Stop Analysis](dashboards/pit_stop_analysis_duration_strategy_insights.png)
 
+This dashboard provides a foundational overview of pit stop performance across teams and circuits.
 
-This dashboard compares the average total pit lane duration across teams.
+**Key insights:**
+- Clear differences exist in average pit lane duration between teams, highlighting varying operational efficiency.
+- Top teams consistently achieve faster and more stable pit times, while lower-tier teams show longer and more variable pit durations.
+- Certain circuits are associated with a higher average number of pit stops per driver, reflecting track layout, tire degradation, and strategic complexity.
 
-It highlights clear differences in pit lane execution, with top teams consistently achieving faster average pit lane times, while lower-tier teams operate with longer pit durations.  
-The visualization emphasizes operational efficiency as a distinguishing factor between teams, without implying direct causality at this stage.
-
----
-
-### 2. Pit Strategy vs Race Results
-![Pit Strategy vs Race Results](dashboards/Pit strategy vs Race Results - Team Efficiency Analysis.png)
-
-This dashboard examines how average finishing position varies with pit stop count and whether pit stop count alone explains race outcomes.
-
-The analysis shows that pit stop count by itself is not a strong predictor of finishing position.  
-Top teams maintain competitive results across different pit stop strategies, while lower-tier teams start from weaker baseline positions regardless of pit stop count.  
-This highlights the limitations of using pit stop count as a standalone performance metric.
+This dashboard establishes the baseline for understanding pit lane performance before connecting it to race results.
 
 ---
 
-### 3. Pit Lane Efficiency vs Results
-![Pit Lane Efficiency vs Results](dashboards/Pit Lane Efficiency vs Results.png)
+## 2️⃣ Pit Strategy vs Results
 
-This dashboard combines two complementary perspectives:
-- A team-level view linking average pit lane time to average finishing position across seasons.
-- A circuit-level view showing how finishing position varies by pit stop count for a selected track.
+![Pit Strategy vs Results](dashboards/pit_strategy_vs_race_results_team_efficiency_analysis.png)
 
-At the team level, faster average pit lane execution is associated with better long-term race results.  
-At the circuit level, the relationship between pit stop count and outcome is not linear and varies by track.
+This dashboard examines how pit stop strategy (number of pit stops) relates to finishing position, both overall and by team.
 
-Together, the visuals show that pit lane efficiency represents a structural advantage, while optimal pit stop strategy depends heavily on circuit context.
+**Key insights:**
+- Drivers completing **1–2 pit stops** generally achieve the best average finishing positions.
+- Extreme strategies (very few or many pit stops) are typically associated with worse outcomes.
+- When segmented by constructor, leading teams maintain relatively competitive results across multiple strategies, while lower-tier teams tend to perform poorly regardless of the number of stops.
 
----
-
-### 4. Yearly Trends in Pit Strategy & Pit Efficiency
-![Yearly Trends in Pit Strategy & Pit Efficiency](dashboards/Yearly Trends in Pit Strategy & Pit Efficiency.png)
-
-This dashboard analyzes how pit stop strategy and pit lane efficiency evolve over time.
-
-Both average pit stop count and pit lane time fluctuate across seasons, with no clear long-term linear trend.  
-Some seasons favor fewer pit stops, while others involve more frequent stops.
-
-Although certain year-to-year changes in pit lane time appear visually sharp, the actual differences are modest (typically less than one second), reflecting seasonal and regulatory context rather than dramatic operational shifts.
+The analysis suggests that while pit stop count matters, team capability and execution quality play a crucial role in determining outcomes.
 
 ---
 
-### 5. Race Strategy Summary
-![Race Strategy Summary](dashboards/Race Strategy Summary.png)
+## 3️⃣ Pit Lane Efficiency vs Race Results
 
-This dashboard highlights the strongest insights derived from the previous analyses.  
-Rather than introducing new charts, it consolidates key findings that emphasize the main relationships between pit stop strategy, pit lane efficiency, and race results.
+![Pit Lane Efficiency vs Race Results](dashboards/pit_lane_efficiency_vs_results.png)
 
-The summary is designed to provide a high-level overview of the project’s conclusions, focusing on insights rather than detailed chart-level interpretation.
+This dashboard focuses on the relationship between pit lane efficiency and overall race performance.
+
+**Key insights:**
+- Teams with faster average pit lane times tend to achieve better average finishing positions.
+- The relationship is consistent across teams, indicating that operational efficiency in the pit lane is a meaningful performance factor.
+- A circuit-level view shows that in some races, more aggressive multi-stop strategies can outperform conservative approaches when executed efficiently, emphasizing context-specific strategy decisions.
+
+Overall, this dashboard highlights pit lane efficiency as an important competitive differentiator.
+
+---
+
+## 4️⃣ Yearly Trends in Pit Strategy & Pit Efficiency
+
+![Yearly Trends](dashboards/yearly_trends_pit_strategy_pit_efficiency.png)
+
+This dashboard presents long-term trends in pit stop strategy and pit lane execution over multiple seasons.
+
+**Key insights:**
+- The average number of pit stops per year typically ranges between **1.6 and 2.1**, reflecting the dominance of one- and two-stop strategies in modern Formula 1.
+- Average pit lane time fluctuates only within a narrow range (approximately **24.4–25.5 seconds**), despite visual variations in the trend line.
+- Although the graph may suggest sharp changes year to year, the actual differences in seconds are relatively small, indicating gradual operational improvements rather than dramatic shifts.
+
+These trends reflect the influence of regulation changes, tire compounds, and evolving strategic preferences over time.
+
+---
+
+## 5️⃣ Race Strategy Summary – Overview Page
+
+![Race Strategy Summary](dashboards/race_strategy_summary.png)
+
+This final dashboard consolidates the **strongest insights** derived from the previous analyses.
+
+Rather than introducing new visualizations, it highlights selected metrics and conclusions that summarize the project’s main findings:
+- The importance of pit lane efficiency for competitive performance.
+- The effectiveness of balanced pit stop strategies.
+- The consistency of strategic patterns across seasons and teams.
+
+This overview serves as a high-level conclusion, tying together pit stop duration, strategy, efficiency, and race results into a coherent strategic narrative.
+
+---
+
