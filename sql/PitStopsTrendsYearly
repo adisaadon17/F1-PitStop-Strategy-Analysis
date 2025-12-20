@@ -1,0 +1,61 @@
+/*
+    View Name: analytics.PitStops_Trends_Yearly
+
+    Objective:
+        Track long-term yearly trends in Formula 1 pit strategy and pit lane efficiency.
+        For each season (year), compute:
+        - Average pit stops per driver (strategy trend)
+        - Average pit lane time in seconds (operational trend)
+
+        Note:
+        This view is designed to support multiple visuals in the report
+        "Yearly Trends in Pit Strategy & Pit Efficiency".
+
+    Used In Power BI:
+        - "Average Pit Stops Per Year"
+        - (Additional yearly trend visuals, if applicable)
+
+    Logic Summary:
+        1) stops CTE:
+           Aggregates driver-level pit stop counts per year to compute avgPitStops_perYear.
+        2) pit CTE:
+           Aggregates pit lane duration per year to compute avgPitLaneTime_perYear.
+        3) Final SELECT:
+           Joins both yearly metrics into a single dataset.
+
+    Source Views:
+        analytics.PitStop_vs_Result,
+        analytics.PitStop_summary_clean
+*/
+
+CREATE OR ALTER VIEW analytics.PitStops_Trends_Yearly AS
+WITH stops AS (
+    SELECT
+        raceYear,
+        AVG(CAST(pitStopCount AS FLOAT)) AS avgPitStops_perYear,
+        COUNT(*) AS totalDriverEntries
+    FROM analytics.PitStop_vs_Result
+    GROUP BY
+        raceYear
+),
+pit AS (
+    SELECT
+        rvr.raceYear,
+        AVG(CAST(ps.pitDurationSec AS FLOAT)) AS avgPitLaneTime_perYear
+    FROM analytics.PitStop_summary_clean AS ps
+    INNER JOIN analytics.PitStop_vs_Result AS rvr
+        ON rvr.raceId = ps.raceId
+        AND rvr.constructorName = ps.constructorName
+    GROUP BY
+        rvr.raceYear
+)
+SELECT
+    s.raceYear,
+    s.avgPitStops_perYear,
+    p.avgPitLaneTime_perYear,
+    s.totalDriverEntries
+FROM stops AS s
+LEFT JOIN pit AS p
+    ON p.raceYear = s.raceYear
+WHERE s.avgPitStops_perYear > 0
+  AND p.avgPitLaneTime_perYear IS NOT NULL;
