@@ -8,7 +8,8 @@ The dashboards build progressively, starting from descriptive operational metric
 ## Dashboards Overview
 
 ### 1. Pit Stop Analysis - Duration & Strategy Insights
-![Average Total Pit Lane Duration by Team](dashboards/Pit Stop Analysis - Duration & Strategy Insights.png)
+![Dashboard](dashboards/pit_lane_efficiency_vs_results.png)
+
 
 This dashboard compares the average total pit lane duration across teams.
 
